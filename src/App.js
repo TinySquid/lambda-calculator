@@ -30,8 +30,16 @@ function App() {
   }
 
   function specialOperators(value) {
-    if (value === specials[0]) {
-      setDisplayValue(0);
+    switch (value) {
+      case specials[0]: {
+        setDisplayValue(0);
+        break;
+      }
+      case specials[1]: {
+        let negate = Number(-displayValue);
+        setDisplayValue(() => `${negate}`);
+        break;
+      }
     }
   }
 
