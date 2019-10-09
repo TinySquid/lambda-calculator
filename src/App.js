@@ -39,25 +39,29 @@ function App() {
       if (operator === '=' && operand !== 0) {
         switch (prevOp) {
           case '+': {
-            setDisplayValue(`${Number(operand) + Number(displayValue)}`);
+            // console.log(`${Number(operand) + Number(displayValue)}`)
+            setDisplayValue(`${Math.round((Number(operand) + Number(displayValue)) * 100) / 100}`);
             setOperand(null);
 
             break;
           }
           case '-': {
-            setDisplayValue(`${Number(operand) - Number(displayValue)}`);
+            // console.log(`${Number(operand) - Number(displayValue)}`)
+            setDisplayValue(`${Math.round((Number(operand) - Number(displayValue)) * 100) / 100}`);
             setOperand(null);
 
             break;
           }
           case '*': {
-            setDisplayValue(`${Number(operand) * Number(displayValue)}`);
+            // console.log(`${Number(operand) * Number(displayValue)}`)
+            setDisplayValue(`${Math.round((Number(operand) * Number(displayValue)) * 100) / 100}`);
             setOperand(null);
 
             break;
           }
           case '/': {
-            setDisplayValue(`${Number(operand) / Number(displayValue)}`);
+            // console.log(`${Number(operand) / Number(displayValue)}`)
+            setDisplayValue(`${Math.round((Number(operand) / Number(displayValue)) * 100) / 100}`);
             setOperand(null);
 
             break;
