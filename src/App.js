@@ -20,6 +20,7 @@ function App() {
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
   const [displayValue, setDisplayValue] = useState(0);
+  const [currentOperation, setCurrentOperation] = useState(null);
 
   function appendDisplayValue(value) {
     if (displayValue === 0) {
@@ -27,6 +28,16 @@ function App() {
     } else {
       setDisplayValue(() => `${displayValue}${value}`);
     }
+  }
+
+  function setOperator(operator) {
+    // if(currentOperation === '='){
+    //   setCurrentOperation(null);
+    // }
+    setCurrentOperation(prevOp => {
+      console.log(`${prevOp} | ${operator}`);
+      return operator;
+    })
   }
 
   function specialOperators(value) {
@@ -55,7 +66,7 @@ function App() {
             <Numbers btnClickHandler={appendDisplayValue} />
           </div>
           <div className="operator-container">
-            <Operators />
+            <Operators btnClickHandler={setOperator} />
           </div>
         </div>
       </div>
