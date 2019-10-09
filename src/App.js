@@ -12,7 +12,7 @@ import "./App.css";
 
 function App() {
   const [displayValue, setDisplayValue] = useState('0');
-  const [currentOperation, setCurrentOperation] = useState(null);
+  const [currentOperation, setCurrentOperation] = useState(null); // eslint-disable-line 
   const [operand, setOperand] = useState(null);
 
   function appendDisplayValue(value) {
@@ -60,6 +60,7 @@ function App() {
 
             break;
           }
+          default: console.log('Invalid operation (setOperator)');
         }
       } else {
         setOperand(Number(displayValue));
@@ -79,10 +80,48 @@ function App() {
         setDisplayValue(() => `${Number(-displayValue)}`);
         break;
       }
+      /*
+      Basically I need to have operand set, and a prevOp set before I can use the % function
+      If those conditions are satisfied, I can continue with the algorithm
+      Divide current display value with 100 to get %, then multiply against operand to get value
+      Preform calculation depending on prevOp
+      */
       case specials[2]: {
-        console.log('Yeet');
+        setCurrentOperation(prevOp => {
+          if (operand !== 0 && prevOp !== null) {
+            switch (prevOp) {
+              case '+': {
+                setDisplayValue(`${Math.round((Number(operand) + Number(operand * (displayValue / 100))) * 100) / 100}`);
+                setOperand(null);
+
+                break;
+              }
+              case '-': {
+                setDisplayValue(`${Math.round((Number(operand) - Number(operand * (displayValue / 100))) * 100) / 100}`);
+                setOperand(null);
+
+                break;
+              }
+              case '*': {
+                setDisplayValue(`${Math.round((Number(operand) * Number(displayValue / 100)) * 100) / 100}`);
+                setOperand(null);
+
+                break;
+              }
+              case '/': {
+                setDisplayValue(`${Math.round((Number(operand) / Number(displayValue / 100)) * 100) / 100}`);
+                setOperand(null);
+
+                break;
+              }
+              default: console.log('Invalid operation (setCurrentOperation)');
+            }
+          }
+          return null;
+        });
         break;
       }
+      default: console.log('Invalid special case (setCurrentOperation)');
     }
   }
 
