@@ -21,23 +21,73 @@ function App() {
 
   const [displayValue, setDisplayValue] = useState(0);
   const [currentOperation, setCurrentOperation] = useState(null);
+  const [operand, setOperand] = useState(null);
 
   function appendDisplayValue(value) {
     if (displayValue === 0) {
       setDisplayValue(`${value}`)
-    } else {
+    } else if (displayValue.length < 10) {
       setDisplayValue(() => `${displayValue}${value}`);
     }
   }
 
   function setOperator(operator) {
+    setCurrentOperation(prevOp => {
+      console.log(`${prevOp} | ${operator}`);
+      if (operator === '=') {
+        console.log(`Operand has a quantity ${operand}`);
+        switch (prevOp) {
+          case '+': {
+            console.log(`Addition ${operand} + ${displayValue} = ${Number(operand) + Number(displayValue)}`)
+
+            setDisplayValue(`${Number(operand) + Number(displayValue)}`);
+
+            setOperand(null);
+
+            break;
+          }
+          case '-': {
+            // console.log(`Addition ${operand} + ${displayValue} = ${Number(operand) + Number(displayValue)}`)
+
+            setDisplayValue(`${Number(operand) - Number(displayValue)}`);
+
+            setOperand(null);
+
+            break;
+          }
+          case '*': {
+            // console.log(`Addition ${operand} + ${displayValue} = ${Number(operand) + Number(displayValue)}`)
+
+            setDisplayValue(`${Number(operand) * Number(displayValue)}`);
+
+            setOperand(null);
+
+            break;
+          }
+          case '/': {
+            // console.log(`Addition ${operand} + ${displayValue} = ${Number(operand) + Number(displayValue)}`)
+            setDisplayValue(`${Number(operand) / Number(displayValue)}`);
+
+            setOperand(null);
+
+            break;
+          }
+        }
+      } else {
+        setOperand(Number(displayValue));
+        setDisplayValue(0);
+        console.log(`Set operand to ${displayValue}`);
+      }
+      return operator;
+    });
+
     // if(currentOperation === '='){
     //   setCurrentOperation(null);
     // }
-    setCurrentOperation(prevOp => {
-      console.log(`${prevOp} | ${operator}`);
-      return operator;
-    })
+    // if (currentOperation !== '=') {
+    //   console.log("test")
+    // }
+
   }
 
   function specialOperators(value) {
@@ -57,17 +107,14 @@ function App() {
   return (
     <div className="container">
       <Logo />
-      <div className="App">
-        {/* STEP 4 - Render your components here and be sure to properly import/export all files */}
-        <Display value={displayValue} />
-        <div className="button-container">
-          <div className="number-container">
-            <Specials btnClickHandler={specialOperators} />
-            <Numbers btnClickHandler={appendDisplayValue} />
-          </div>
-          <div className="operator-container">
-            <Operators btnClickHandler={setOperator} />
-          </div>
+      <Display value={displayValue} />
+      <div className="button-container">
+        <div className="number-container">
+          <Specials btnClickHandler={specialOperators} />
+          <Numbers btnClickHandler={appendDisplayValue} />
+        </div>
+        <div className="operator-container">
+          <Operators btnClickHandler={setOperator} />
         </div>
       </div>
     </div>
