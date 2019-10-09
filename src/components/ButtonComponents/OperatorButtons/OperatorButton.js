@@ -1,11 +1,10 @@
 import React from "react";
 
 const OperatorButton = (props) => {
-  const buttonText = props.buttonText;
-  const buttonValue = props.buttonValue;
+  const setOperator = props.clickHandler;
 
   return (
-    <button className="operator-button" onClick={() => props.clickHandler(buttonValue)}>{buttonText}</button >
+    <button className="operator-button" onClick={() => setOperator(props.buttonValue)}>{props.buttonText}</button >
   );
 };
 
